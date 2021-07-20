@@ -1,0 +1,19 @@
+-- Answer to the question: what is the Average Basket of the Breakfast_Users that we defined before?
+-- Order all your findings, showing us the 10 cities with the most Breakfast Orders.
+-- Please see column Average_Basket_Breakfast_Users as an answer to the above question
+
+with breakfast_city as (
+    SELECT city, count(cuisine_parent) as Breakfast_Orders, count(DISTINCT user_id) as Breakfast_Users
+    FROM `bi-2019-test.ad_hoc.orders_jan2021`
+    WHERE cuisine_parent = 'Breakfast'
+    GROUP BY city)
+
+SELECT t.city,count(order_id) as number_of_orders,count(DISTINCT user_id) as number_of_unique_users , 
+breakfast_city.Breakfast_Orders, breakfast_city.Breakfast_Users, avg(basket) as Average_Basket_Breakfast_Users
+FROM `bi-2019-test.ad_hoc.orders_jan2021`as t 
+Left join breakfast_city
+on t.city=breakfast_city.city
+GROUP BY t.city,breakfast_city.Breakfast_Orders, breakfast_city.Breakfast_Users
+HAVING count(order_id) > 500
+ORDER BY (breakfast_city.Breakfast_Orders) DESC
+LIMIT 10;
