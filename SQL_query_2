@@ -1,5 +1,5 @@
-- Answer to the question : how many users ordered from the "Breakfast" cuisine (Breakfast_Users)?
-- Please see Breakfast_Users column for this response
+-- Answer to the question : how many users ordered from the "Breakfast" cuisine (Breakfast_Users)?
+-- Please see Breakfast_Users column for the answer to the above question
 
 with breakfast_city as (
     SELECT city, count(cuisine_parent) as Breakfast_Orders, count(DISTINCT user_id) as Breakfast_Users
