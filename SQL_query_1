@@ -1,4 +1,5 @@
 - Answer to the question:how many orders are placed in the "Breakfast" cuisine (Breakfast_Orders)?
+- Please find answer in column named Breakfast_Orders
 
 with breakfast_city as (
     SELECT city, count(cuisine_parent) as Breakfast_Orders
