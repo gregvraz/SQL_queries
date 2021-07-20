@@ -1,0 +1,16 @@
+- Answer to the question:how many orders are placed in the "Breakfast" cuisine (Breakfast_Orders)?
+
+with breakfast_city as (
+    SELECT city, count(cuisine_parent) as Breakfast_Orders
+    FROM `bi-2019-test.ad_hoc.orders_jan2021`
+    WHERE cuisine_parent = 'Breakfast'
+    GROUP BY city)
+
+SELECT t.city, count(order_id) as number_of_orders, breakfast_city.Breakfast_Orders 
+FROM `bi-2019-test.ad_hoc.orders_jan2021`as t 
+LEFT JOIN breakfast_city
+ON t.city=breakfast_city.city
+GROUP BY t.city,breakfast_city.Breakfast_Orders
+HAVING count(order_id) > 500
+ORDER BY (breakfast_city.Breakfast_Orders) DESC
+LIMIT 10;
